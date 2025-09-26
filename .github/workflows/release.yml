@@ -1,0 +1,46 @@
+name: Build and Release
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Required to upload release assets
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.23.x'
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '22.x'
+          cache: 'pnpm'
+          cache-dependency-path: web/pnpm-lock.yaml
+
+      - name: Build web frontend
+        working-directory: ./web
+        run: |
+          pnpm install
+          pnpm build
+
+      - name: Build Go backend for Linux (amd64)
+        run: |
+          GOOS=linux GOARCH=amd64 go build -o dictionary-server-linux-amd64 .
+
+      - name: Upload Release Asset
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ./dictionary-server-linux-amd64
