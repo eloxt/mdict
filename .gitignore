@@ -1,0 +1,6 @@
+.idea
+node_modules
+build
+/web/.react-router/
+/dict/
+/go-mdict
