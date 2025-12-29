@@ -1,16 +1,19 @@
 module go-mdict
 
-go 1.23.5
+go 1.24.0
 
 require (
+	github.com/JohannesKaufmann/html-to-markdown/v2 v2.5.0
 	github.com/c0mm4nd/go-ripemd v0.0.0-20200326052756-bd1759ad7d10
 	github.com/gin-gonic/gin v1.11.0
 	github.com/op/go-logging v0.0.0-20160315200505-970db520ece7
 	github.com/rasky/go-lzo v0.0.0-20200203143853-96a758eda86e
-	golang.org/x/text v0.27.0
+	golang.org/x/text v0.31.0
 	gorm.io/driver/sqlite v1.6.0
 	gorm.io/gorm v1.31.0
 )
+
+require github.com/JohannesKaufmann/dom v0.2.0 // indirect
 
 require (
 	github.com/bytedance/sonic v1.14.0 // indirect
@@ -40,11 +43,11 @@ require (
 	github.com/ugorji/go/codec v1.3.0 // indirect
 	go.uber.org/mock v0.5.0 // indirect
 	golang.org/x/arch v0.20.0 // indirect
-	golang.org/x/crypto v0.40.0 // indirect
-	golang.org/x/mod v0.25.0 // indirect
-	golang.org/x/net v0.42.0 // indirect
-	golang.org/x/sync v0.16.0 // indirect
-	golang.org/x/sys v0.35.0 // indirect
-	golang.org/x/tools v0.34.0 // indirect
+	golang.org/x/crypto v0.44.0 // indirect
+	golang.org/x/mod v0.29.0 // indirect
+	golang.org/x/net v0.47.0 // indirect
+	golang.org/x/sync v0.18.0 // indirect
+	golang.org/x/sys v0.38.0 // indirect
+	golang.org/x/tools v0.38.0 // indirect
 	google.golang.org/protobuf v1.36.9 // indirect
 )

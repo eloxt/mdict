@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDictStore } from "./hooks/use-dict-store";
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
@@ -21,6 +21,7 @@ export default function Main() {
     const [error, setError] = useState(false)
     const [selectedDict, setSelectedDict] = useState<Dictionary | null>(null)
     const [wordData, setWordData] = useState<lookupResult | null>(null)
+    const iframeRef = useRef<HTMLIFrameElement | null>(null)
 
     // Fetch dictionary list on component mount
     useEffect(() => {
@@ -56,7 +57,7 @@ export default function Main() {
                 }
                 const data: lookupResult = await response.json();
                 setWordData(data);
-                const iframe = document.getElementById('definition-iframe') as HTMLIFrameElement | null;
+                const iframe = iframeRef.current;
                 if (iframe && data) {
                     iframe.srcdoc = data.html;
                 }
@@ -132,6 +133,7 @@ export default function Main() {
 
             <div className="w-full">
                 <iframe id="definition-iframe"
+                    ref={iframeRef}
                     className={`px-4 ${selectedWord ? "" : "hidden"}`} style={{ width: '100%', height: 'calc(100vh - 6rem)', border: 'none' }}
                 ></iframe>
                 {!selectedWord && (

@@ -14,6 +14,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	htmltomarkdown "github.com/JohannesKaufmann/html-to-markdown/v2"
 	"github.com/gin-contrib/static"
 
 	"github.com/gin-gonic/gin"
@@ -313,10 +314,17 @@ func lookupHandler(c *gin.Context) {
 	}
 	html = fmt.Sprintf(replacer.WordDefinitionTemplate, html)
 
+	markdown, err := htmltomarkdown.ConvertString(html)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to convert html to markdown: " + err.Error()})
+		return
+	}
+
 	c.JSON(http.StatusOK, gin.H{
 		"word":       word,
 		"dictionary": dictId,
 		"html":       html,
+		"markdown":   markdown,
 	})
 }
 
