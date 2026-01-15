@@ -13,6 +13,18 @@ export function SearchForm() {
     const [searchResults, setSearchResults] = useState<string[]>([])
     const [selectedWord, setSelectedWord] = useState<string | null>(null)
 
+    // Pre-fill search input from URL hash on mount
+    useEffect(() => {
+        const hash = window.location.hash
+        if (hash) {
+            const word = decodeURIComponent(hash.slice(1))
+            if (word) {
+                setSearchTerm(word)
+                setSelectedWord(word)
+            }
+        }
+    }, [])
+
     useEffect(() => {
         if (!useDictStore.getState().dictionary) {
             return

@@ -22,7 +22,21 @@ export default function Actions(props: { word: string }) {
     return (
         <ActionPanel>
             <ActionPanel.Section>
-                <Action.Push title="Show Details" target={<Detail markdown={markdown} />} />
+                <Action.Push
+                    title="Show Details"
+                    target={
+                        <Detail
+                            markdown={markdown}
+                            actions={
+                                <ActionPanel>
+                                    <ActionPanel.Section>
+                                        <Action.OpenInBrowser url={`https://dict.eloxt.cn/#${props.word}`} />
+                                    </ActionPanel.Section>
+                                </ActionPanel>
+                            }
+                        />
+                    }
+                />
             </ActionPanel.Section>
         </ActionPanel>
     );
