@@ -10,10 +10,16 @@ interface DictStore {
 }
 
 export const useDictStore = create<DictStore>()(
-    (set) => ({
-        dictionary: null,
-        word: null,
-        setDictionary: (dictionary: Dictionary) => set({ dictionary }),
-        setWord: (word: string) => set({ word }),
-    })
+    persist(
+        (set) => ({
+            dictionary: null,
+            word: null,
+            setDictionary: (dictionary: Dictionary) => set({ dictionary }),
+            setWord: (word: string) => set({ word }),
+        }),
+        {
+            name: 'dict-store',
+            partialize: (state) => ({ dictionary: state.dictionary }),
+        }
+    )
 )
