@@ -23,7 +23,7 @@ export default function Main() {
     const [wordData, setWordData] = useState<lookupResult | null>(null)
     const iframeRef = useRef<HTMLIFrameElement | null>(null)
 
-    // Fetch dictionary list on component mount
+    // Fetch dictionary list on component mount and handle URL hash
     useEffect(() => {
         const fetchDicts = async () => {
             try {
@@ -36,6 +36,15 @@ export default function Main() {
                 if (data.length > 0) {
                     setSelectedDict(data[0])
                     useDictStore.getState().setDictionary(data[0])
+
+                    // Check for URL hash and set word if present
+                    const hash = window.location.hash
+                    if (hash) {
+                        const word = decodeURIComponent(hash.slice(1))
+                        if (word) {
+                            useDictStore.getState().setWord(word)
+                        }
+                    }
                 }
             } catch (error) {
                 setError(true)

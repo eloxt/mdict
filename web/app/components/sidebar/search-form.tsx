@@ -55,6 +55,7 @@ export function SearchForm() {
                             setSearchResults([])
                             setSelectedWord(null)
                             useDictStore.getState().setWord("")
+                            window.history.replaceState(null, "", window.location.pathname)
                         }}
                     >
                         <X className="size-3" />
@@ -68,6 +69,7 @@ export function SearchForm() {
                         <div key={index} className={`p-2 ${selectedWord === result ? "bg-accent-foreground text-accent" : "hover:bg-accent"}  rounded-md cursor-pointer`} onClick={() => {
                             setSelectedWord(result)
                             useDictStore.getState().setWord(result)
+                            window.history.replaceState(null, "", `#${encodeURIComponent(result)}`)
                         }}>
                             {result}
                         </div>
