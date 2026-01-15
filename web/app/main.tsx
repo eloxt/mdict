@@ -1,9 +1,16 @@
 import { useEffect, useRef, useState } from "react";
+import type { MetaFunction } from "react-router";
 import { useDictStore } from "./hooks/use-dict-store";
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { ChevronsUpDown } from "lucide-react";
+
+export const meta: MetaFunction = () => {
+    return [
+        { title: "Dictionary" },
+    ];
+};
 
 export interface Dictionary {
     id: string
@@ -80,6 +87,15 @@ export default function Main() {
             fetchHtml();
         }
     }, [selectedWord]);
+
+    // Update page title when a word is selected
+    useEffect(() => {
+        if (selectedWord) {
+            document.title = `${selectedWord} - Dictionary`
+        } else {
+            document.title = 'Dictionary'
+        }
+    }, [selectedWord])
 
     useEffect(() => {
         window.onmessage = (event) => {
